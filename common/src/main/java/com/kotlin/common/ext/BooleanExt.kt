@@ -1,4 +1,4 @@
-package com.kotlin.common
+package com.kotlin.common.ext
 
 sealed class BooleanExt<out T>
 

@@ -1,5 +1,7 @@
 package com.kotlin.common
 
+import com.kotlin.common.ext.otherwise
+import com.kotlin.common.ext.yes
 import org.junit.Test
 
 import org.junit.Assert.*

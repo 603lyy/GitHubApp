@@ -1,4 +1,4 @@
-package com.kotlin.common
+package com.kotlin.common.sharepreferences
 
 import android.content.Context
 import java.lang.IllegalArgumentException
