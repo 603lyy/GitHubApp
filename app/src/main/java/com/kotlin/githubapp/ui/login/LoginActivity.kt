@@ -1,7 +1,6 @@
 package com.kotlin.githubapp.ui.login
 
 import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -17,7 +16,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.kotlin.githubapp.R
-import com.kotlin.githubapp.Setting
+import com.kotlin.githubapp.settings.Setting
 
 class LoginActivity : AppCompatActivity() {
 

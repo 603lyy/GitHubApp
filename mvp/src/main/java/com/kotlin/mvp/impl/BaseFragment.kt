@@ -94,6 +94,3 @@ abstract class BaseFragment<out P : BasePresenter<BaseFragment<P>>> : IMvpView<P
         presenter.onViewStateRestored(savedInstanceState)
     }
 }
-
-class MainFragment:BaseFragment<MainPresenter>()
-class MainPresenter:BasePresenter<MainFragment>()

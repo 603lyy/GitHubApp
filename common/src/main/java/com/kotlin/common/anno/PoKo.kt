@@ -1,4 +1,4 @@
-package com.bennyhuo.github.common.anno
+package com.kotlin.common.anno
 
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS)

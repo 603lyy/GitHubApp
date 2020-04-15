@@ -1,10 +1,9 @@
-package com.bennyhuo.mvp.impl
+package com.kotlin.mvp.impl
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kotlin.mvp.IMvpView
 import com.kotlin.mvp.IPresenter
-import com.kotlin.mvp.impl.BasePresenter
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 import kotlin.reflect.KClass

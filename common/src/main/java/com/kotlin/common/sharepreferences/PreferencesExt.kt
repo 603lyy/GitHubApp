@@ -5,7 +5,7 @@ import java.lang.IllegalArgumentException
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class Preferences<T>(
+class Preference<T>(
     val context: Context,
     val keyName: String,
     val defaultValue: T,
@@ -17,8 +17,11 @@ class Preferences<T>(
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        return findPreference(keyName)
+        return findPreference(findProperName(property))
     }
+
+    private fun findProperName(property: KProperty<*>) =
+        if (keyName.isEmpty()) property.name else keyName
 
     private fun findPreference(key: String): T {
         return when (defaultValue) {
@@ -29,7 +32,7 @@ class Preferences<T>(
     }
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        putPreference(keyName,value)
+        putPreference(keyName, value)
     }
 
     private fun putPreference(key: String, value: T) {

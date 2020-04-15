@@ -1,8 +1,6 @@
-package com.bennyhuo.github.common.ext
+package com.kotlin.common.ext
 
 import android.util.Log
-import com.kotlin.common.ext.no
-import com.kotlin.common.ext.yes
 import java.io.File
 
 private const val TAG = "FileExt"
