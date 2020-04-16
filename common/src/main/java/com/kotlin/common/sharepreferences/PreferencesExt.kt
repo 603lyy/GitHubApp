@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 class Preference<T>(
-    val context: Context,
+    private val context: Context,
     val keyName: String,
     val defaultValue: T,
     val preName: String = "default"
@@ -32,7 +32,7 @@ class Preference<T>(
     }
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        putPreference(keyName, value)
+        putPreference(findProperName(property), value)
     }
 
     private fun putPreference(key: String, value: T) {

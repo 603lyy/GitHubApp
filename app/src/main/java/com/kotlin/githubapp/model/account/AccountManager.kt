@@ -29,7 +29,7 @@ object AccountManager {
 
     private var userJson by pref("")
 
-    var currentUser: User? = null
+    private var currentUser: User? = null
         get() {
             if (field == null && userJson.isNotEmpty()) {
                 field = Gson().fromJson<User>(userJson)
@@ -64,8 +64,6 @@ object AccountManager {
 
     fun login() =
         AuthService.createAuthorization(AuthorizationReq())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
             .doOnNext {
                 if (token.isEmpty()) throw AccountException(it)
             }
@@ -87,6 +85,8 @@ object AccountManager {
                 currentUser = it
                 notifyLogin(it)
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
 
     fun logout() = AuthService.deleteAuthorization(authId)
         .doOnNext {
@@ -100,6 +100,8 @@ object AccountManager {
             }
 
         }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
 
     class AccountException(val authorizationRsp: AuthorizationRsp) : Exception("Already logged in.")
 }
