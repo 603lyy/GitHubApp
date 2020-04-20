@@ -71,4 +71,12 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
     api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
+
+    api 'com.google.code.findbugs:jsr305:3.0.1'
+
+    api 'com.github.tony19:logback-android-core:1.1.1-6'
+    api('com.github.tony19:logback-android-classic:1.1.1-6') {
+        // workaround issue #73
+        exclude group: 'com.google.android', module: 'android'
+    }
 }

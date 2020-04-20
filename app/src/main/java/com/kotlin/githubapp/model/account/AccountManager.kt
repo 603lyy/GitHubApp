@@ -85,8 +85,6 @@ object AccountManager {
                 currentUser = it
                 notifyLogin(it)
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
 
     fun logout() = AuthService.deleteAuthorization(authId)
         .doOnNext {
@@ -100,8 +98,6 @@ object AccountManager {
             }
 
         }
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
 
     class AccountException(val authorizationRsp: AuthorizationRsp) : Exception("Already logged in.")
 }
