@@ -6,6 +6,7 @@ import com.kotlin.githubapp.network.entities.AuthorizationRsp
 import com.kotlin.githubapp.network.entities.User
 import com.kotlin.githubapp.network.services.AuthService
 import com.kotlin.githubapp.network.services.UserService
+import com.kotlin.githubapp.settings.Configs
 import com.kotlin.githubapp.utils.fromJson
 import com.kotlin.githubapp.utils.pref
 import retrofit2.HttpException
@@ -61,6 +62,21 @@ object AccountManager {
     }
 
     fun isLoginIn(): Boolean = token.isNotEmpty()
+
+    fun login2() =
+        AuthService.getUser()
+            .doOnNext {
+                if (it.token == null || it.token.isEmpty()) it.token = Configs.Account.accessToken
+            }
+            .flatMap {
+                token = it.token
+                authId = it.id
+                UserService.getAuthenticatedUser()
+            }
+            .map {
+                currentUser = it
+                notifyLogin(it)
+            }
 
     fun login() =
         AuthService.createAuthorization(AuthorizationReq())

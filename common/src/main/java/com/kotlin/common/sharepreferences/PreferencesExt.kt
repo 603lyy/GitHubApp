@@ -26,6 +26,8 @@ class Preference<T>(
     private fun findPreference(key: String): T {
         return when (defaultValue) {
             is Long -> prefs.getLong(key, defaultValue)
+            is Int -> prefs.getInt(key, defaultValue)
+            is Boolean -> prefs.getBoolean(key, defaultValue)
             is String -> prefs.getString(key, defaultValue)
             else -> throw IllegalArgumentException("unsupported type.")
         } as T
@@ -39,6 +41,8 @@ class Preference<T>(
         with(prefs.edit()) {
             when (value) {
                 is Long -> putLong(key, value)
+                is Int -> putInt(key, value)
+                is Boolean -> putBoolean(key, value)
                 is String -> putString(key, value)
                 else -> throw IllegalArgumentException("unsupported type.")
             }

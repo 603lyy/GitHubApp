@@ -5,10 +5,7 @@ import com.kotlin.githubapp.network.entities.AuthorizationRsp
 import com.kotlin.githubapp.network.retrofit
 import com.kotlin.githubapp.settings.Configs
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 import rx.Observable
 
 interface AuthApi {
@@ -21,6 +18,9 @@ interface AuthApi {
 
     @DELETE("/authorization/{id}")
     fun deleteAuthorization(@Path("id") id: Int): Observable<Response<Any>>
+
+    @GET("/user?access_token=${Configs.Account.accessToken}")
+    fun getUser(): Observable<AuthorizationRsp>
 }
 
 object AuthService : AuthApi by retrofit.create(AuthApi::class.java)

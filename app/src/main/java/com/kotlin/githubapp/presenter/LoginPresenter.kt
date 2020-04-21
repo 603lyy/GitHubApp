@@ -12,7 +12,7 @@ class LoginPresenter : BasePresenter<LoginActivity>() {
         AccountManager.username = name
         AccountManager.password = password
         view.onLoginStart()
-        AccountManager.login()
+        AccountManager.login2()
             .subscribe({
                 view.onLoginSuccess()
             }, {
@@ -30,7 +30,7 @@ class LoginPresenter : BasePresenter<LoginActivity>() {
 
     override fun onResume() {
         super.onResume()
-        Log.i("lyy",AccountManager.toString())
+        Log.i("lyy", AccountManager.toString())
         view.onDataInit(AccountManager.username, AccountManager.password)
     }
 
