@@ -2,12 +2,14 @@ package com.kotlin.githubapp.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.ScrollView
+import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
 import com.kotlin.common.ext.otherwise
 import com.kotlin.common.ext.yes
 
@@ -17,6 +19,7 @@ import com.kotlin.githubapp.utils.hideSoftInput
 import com.kotlin.mvp.impl.BaseActivity
 import org.jetbrains.anko.toast
 
+@ActivityBuilder(flags = [Intent.FLAG_ACTIVITY_NO_HISTORY])
 class LoginActivity : BaseActivity<LoginPresenter>() {
 
     private val userName by lazy { findViewById<EditText>(R.id.username) }
@@ -46,6 +49,10 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
                     showTips(password, "用户名不合法")
                 }
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+
     }
 
     private fun showProgress(show: Boolean) {

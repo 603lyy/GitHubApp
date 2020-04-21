@@ -1,4 +1,4 @@
-package com.bennyhuo.github.utils
+package com.kotlin.githubapp.utils
 
 import android.widget.TextView
 import com.zzhoujay.richtext.RichText

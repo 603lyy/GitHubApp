@@ -1,4 +1,4 @@
-package com.bennyhuo.github.utils
+package com.kotlin.githubapp.utils
 
 import cn.carbs.android.avatarimageview.library.AvatarImageView
 import com.bumptech.glide.Glide

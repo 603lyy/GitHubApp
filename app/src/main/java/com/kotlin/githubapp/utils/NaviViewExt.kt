@@ -1,10 +1,10 @@
-package com.bennyhuo.github.utils
+package com.kotlin.githubapp.utils
 
-import android.support.design.widget.NavigationView
-import android.support.v4.view.ViewCompat
 import android.view.View
-import com.bennyhuo.github.common.ext.otherwise
-import com.bennyhuo.github.common.ext.yes
+import androidx.core.view.ViewCompat
+import com.google.android.material.navigation.NavigationView
+import com.kotlin.common.ext.otherwise
+import com.kotlin.common.ext.yes
 
 /**
  * Created by benny on 7/6/17.

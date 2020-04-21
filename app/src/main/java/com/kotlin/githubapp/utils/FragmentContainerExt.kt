@@ -1,8 +1,8 @@
-package com.bennyhuo.github.utils
+package com.kotlin.githubapp.utils
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 /**
  * Created by benny on 7/6/17.
