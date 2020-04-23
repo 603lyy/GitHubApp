@@ -28,9 +28,9 @@ object AccountManager {
     var authId by pref(-1)
     var token by pref("")
 
-    private var userJson by pref("")
+    var userJson by pref("")
 
-    private var currentUser: User? = null
+    var currentUser: User? = null
         get() {
             if (field == null && userJson.isNotEmpty()) {
                 field = Gson().fromJson<User>(userJson)
@@ -47,7 +47,7 @@ object AccountManager {
             field = value
         }
 
-    private val onAccountStatusChangeListenerList = ArrayList<OnAccountStatusChangeListener>()
+    var onAccountStatusChangeListenerList = ArrayList<OnAccountStatusChangeListener>()
 
     private fun notifyLogin(user: User) {
         onAccountStatusChangeListenerList.forEach {

@@ -1,61 +1,86 @@
 package com.kotlin.githubapp.view.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
+import cn.carbs.android.avatarimageview.library.AvatarImageView
 import com.kotlin.githubapp.R
+import com.kotlin.githubapp.utils.markdownText
+import org.jetbrains.anko.*
+import org.jetbrains.anko.custom.ankoView
+import org.jetbrains.anko.sdk15.listeners.onClick
+import org.jetbrains.anko.support.v4.UI
+import org.jetbrains.anko.support.v4.nestedScrollView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AboutFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        return AboutFragmentUI().createView(AnkoContext.create(context!!, this))
     }
+}
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AboutFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AboutFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+class AboutFragmentUI : AnkoComponent<AboutFragment> {
+    override fun createView(ui: AnkoContext<AboutFragment>): View = ui.apply {
+        nestedScrollView {
+            verticalLayout {
+
+                avatarImageView {
+                    setTextAndColorSeed("abc", "1234")
+                }.lparams(width = dip(60), height = dip(60)) {
+                    gravity = Gravity.CENTER_HORIZONTAL
                 }
+
+                imageView {
+                    imageResource = R.mipmap.ic_launcher
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+
+                themedTextView("GitHub", R.style.detail_title) {
+                    textColorResource = R.color.colorPrimary
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+
+                themedTextView("By lyy", R.style.detail_description) {
+                    textColorResource = R.color.colorPrimary
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+
+                themedTextView(R.string.open_source_licenses, R.style.detail_description) {
+                    textColorResource = R.color.colorPrimary
+
+                    onClick {
+                        alert {
+                            customView {
+                                scrollView {
+                                    textView {
+                                        padding = dip(10)
+                                        markdownText =
+                                            context.assets.open("licenses.md").bufferedReader()
+                                                .readText()
+                                    }
+                                }
+                            }
+                        }.show()
+                    }
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+            }.lparams(width = wrapContent, height = wrapContent) {
+                gravity = Gravity.CENTER
             }
-    }
+        }
+    }.view
+}
+
+inline fun ViewManager.avatarImageView(): AvatarImageView = avatarImageView() {}
+inline fun ViewManager.avatarImageView(init: (@AnkoViewDslMarker AvatarImageView).() -> Unit): AvatarImageView {
+    return ankoView({ ctx: Context -> AvatarImageView(ctx) }, theme = 0) { init() }
 }

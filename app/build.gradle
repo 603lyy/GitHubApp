@@ -2,14 +2,19 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-noarg'
 
 kotlin {
-    experimental {
-        coroutines "enable"
-    }
+//    experimental {
+//        coroutines "enable"
+//    }
     androidExtensions {
         experimental true
     }
+}
+
+noArg {
+    annotations "com.kotlin.common.anno.PoKo"
 }
 
 android {
