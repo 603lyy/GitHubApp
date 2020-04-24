@@ -11,4 +11,9 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorAccent">#FF0000</color>
     <color name="textColorSecondary">#AAAAAA</color>
+
+    <color name="google_red">#ea4235</color>
+    <color name="google_yellow">#fabc05</color>
+    <color name="google_green">#34a853</color>
+    <color name="google_blue">#4286f5</color>
 </resources>
