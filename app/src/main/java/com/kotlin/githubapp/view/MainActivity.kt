@@ -8,17 +8,17 @@ import androidx.core.view.GravityCompat
 import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
 import com.kotlin.common.ext.no
 import com.kotlin.common.ext.otherwise
+import com.kotlin.common.ext.yes
 import com.kotlin.common.log.logger
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.model.account.AccountManager
 import com.kotlin.githubapp.model.account.OnAccountStatusChangeListener
 import com.kotlin.githubapp.network.entities.User
 import com.kotlin.githubapp.network.services.RepositoryService
-import com.kotlin.githubapp.utils.doOnLayoutAvailable
-import com.kotlin.githubapp.utils.format
-import com.kotlin.githubapp.utils.loadWithGlide
-import com.kotlin.githubapp.utils.showFragment
+import com.kotlin.githubapp.utils.*
+import com.kotlin.githubapp.view.config.NavViewItem
 import com.kotlin.githubapp.view.fragment.AboutFragment
+import com.kotlin.githubapp.view.widget.NavigationController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -29,6 +29,10 @@ import java.util.*
 
 @ActivityBuilder(flags = [Intent.FLAG_ACTIVITY_CLEAR_TOP])
 class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
+
+    private val navigationController by lazy {
+        NavigationController(navigationView, ::onNavItemChanged, ::handleNavigationHeaderClickEvent)
+    }
 
     lateinit var toggle: ActionBarDrawerToggle
 
@@ -65,24 +69,14 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
     }
 
     private fun initNavigationView() {
-        AccountManager.currentUser?.let(::updateNavigationView) ?: clearNavigationView()
-        initNavigationHeaderEvent()
-    }
-
-    private fun initNavigationHeaderEvent() {
-        navigationView.doOnLayoutAvailable {
-            navigationHeader.setOnClickListener {
-                AccountManager.isLoginIn().no {
-
-                }.otherwise {
-                    AccountManager.logout().subscribe({
-                        toast("注销成功")
-                    }, {
-                        it.printStackTrace()
-                    })
-                }
+        AccountManager.isLoginIn()
+            .yes {
+                navigationController.useLoginLayout()
             }
-        }
+            .otherwise {
+                navigationController.useNoLoginLayout()
+            }
+        navigationController.selectProperItem()
     }
 
     private fun updateNavigationView(user: User) {
@@ -93,20 +87,34 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
         }
     }
 
-    private fun clearNavigationView() {
-        navigationView.doOnLayoutAvailable {
-            usernameView.text = "请登录"
-            emailView.text = ""
-            avatarView.imageResource = R.drawable.ic_github
-        }
-    }
-
     override fun onLogin(user: User) {
-        updateNavigationView(user)
+        navigationController.useLoginLayout()
     }
 
     override fun onLogout() {
-        clearNavigationView()
+        navigationController.useNoLoginLayout()
+    }
+
+    private fun onNavItemChanged(navViewItem: NavViewItem) {
+        drawer_layout.afterClosed {
+            showFragment(R.id.fragmentContainer, navViewItem.fragmentClass, navViewItem.arguements)
+            title = navViewItem.title
+        }
+    }
+
+    private fun handleNavigationHeaderClickEvent() {
+        AccountManager.isLoginIn().no {
+//            startLoginActivity()
+        }.otherwise {
+            AccountManager
+                .logout()
+                .subscribe({
+                    toast("注销成功")
+                }, {
+                    it.printStackTrace()
+                })
+        }
+
     }
 
     override fun onBackPressed() {
