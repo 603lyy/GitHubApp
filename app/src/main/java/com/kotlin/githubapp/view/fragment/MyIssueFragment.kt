@@ -1,4 +1,4 @@
-package com.bennyhuo.github.view.fragments
+package com.kotlin.githubapp.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,6 @@ import org.jetbrains.anko.textView
  */
 class MyIssueFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return UI { textView("Todo Repo") }.view
+        return UI { textView("Todo MyIssue") }.view
     }
 }

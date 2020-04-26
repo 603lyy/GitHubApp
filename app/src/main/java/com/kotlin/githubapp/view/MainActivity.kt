@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
     private fun handleNavigationHeaderClickEvent() {
         AccountManager.isLoginIn().no {
 //            startLoginActivity()
+            toast("去登录")
         }.otherwise {
             AccountManager
                 .logout()

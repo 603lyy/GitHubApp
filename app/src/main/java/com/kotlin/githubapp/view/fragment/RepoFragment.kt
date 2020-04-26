@@ -1,4 +1,4 @@
-package com.bennyhuo.github.view.fragments
+package com.kotlin.githubapp.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

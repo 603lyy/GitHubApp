@@ -71,8 +71,9 @@ class NavigationController(
         navigationView.doOnLayoutAvailable {
             logger.debug("selectProperItem onLayout: $currentItem")
             ((currentItem?.let { NavViewItem[it] } ?: Settings.lastPage)
-                    .takeIf { navigationView.menu.findItem(it) != null } ?: run { Settings.defaultPage })
-                    .let(navigationView::selectItem)
+                .takeIf { navigationView.menu.findItem(it) != null }
+                ?: run { Settings.defaultPage })
+                .let(navigationView::selectItem)
         }
     }
 }
