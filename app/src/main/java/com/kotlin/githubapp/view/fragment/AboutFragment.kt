@@ -3,17 +3,16 @@ package com.kotlin.githubapp.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import cn.carbs.android.avatarimageview.library.AvatarImageView
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.utils.markdownText
+import com.kotlin.githubapp.view.common.CommonSinglePageFragment
 import org.jetbrains.anko.*
 import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.sdk15.listeners.onClick
-import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.nestedScrollView
 
-class AboutFragment : Fragment() {
+class AboutFragment : CommonSinglePageFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

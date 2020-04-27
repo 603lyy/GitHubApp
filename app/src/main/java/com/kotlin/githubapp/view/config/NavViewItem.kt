@@ -4,12 +4,9 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import com.kotlin.githubapp.view.fragment.AboutFragment
 import com.kotlin.githubapp.R.id
 import com.kotlin.githubapp.R.drawable
-import com.kotlin.githubapp.view.fragment.MyIssueFragment
-import com.kotlin.githubapp.view.fragment.PeopleFragment
-import com.kotlin.githubapp.view.fragment.RepoListFragment
+import com.kotlin.githubapp.view.fragment.*
 
 class NavViewItem private constructor(
     val groupId: Int = 0,
@@ -25,7 +22,7 @@ class NavViewItem private constructor(
                 0,
                 "Repository",
                 drawable.ic_repository,
-                RepoListFragment::class.java
+                RepoFragment::class.java
             ),
             id.navPeople to NavViewItem(
                 0,
