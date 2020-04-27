@@ -9,10 +9,12 @@ import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
 import com.kotlin.common.ext.no
 import com.kotlin.common.ext.otherwise
 import com.kotlin.common.ext.yes
+import com.kotlin.githubapp.AppContext
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.model.account.AccountManager
 import com.kotlin.githubapp.model.account.OnAccountStatusChangeListener
 import com.kotlin.githubapp.network.entities.User
+import com.kotlin.githubapp.settings.Configs
 import com.kotlin.githubapp.utils.*
 import com.kotlin.githubapp.view.config.NavViewItem
 import com.kotlin.githubapp.view.fragment.AboutFragment
@@ -41,8 +43,6 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        title = "About"
-
         toggle = ActionBarDrawerToggle(
             this,
             drawer_layout,
@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
 
         AccountManager.onAccountStatusChangeListenerList.add(this)
 
-        showFragment(R.id.fragmentContainer, AboutFragment::class.java)
     }
 
     private fun initNavigationView() {
@@ -97,16 +96,17 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
 
     private fun handleNavigationHeaderClickEvent() {
         AccountManager.isLoginIn().no {
-//            startLoginActivity()
-            toast("去登录")
+            startActivity(Intent(AppContext, LoginActivity::class.java))
         }.otherwise {
-            AccountManager
-                .logout()
-                .subscribe({
-                    toast("注销成功")
-                }, {
-                    it.printStackTrace()
-                })
+            AccountManager.logoutDebug()
+            toast("注销成功")
+//            AccountManager
+//                .logout()
+//                .subscribe({
+//                    toast("注销成功")
+//                }, {
+//                    it.printStackTrace()
+//                })
         }
 
     }

@@ -116,4 +116,12 @@ object AccountManager {
         }
 
     class AccountException(val authorizationRsp: AuthorizationRsp) : Exception("Already logged in.")
+
+    fun logoutDebug(){
+        currentUser = null
+        authId = -1;
+        token = ""
+        notifyLogout()
+    }
+
 }

@@ -13,11 +13,17 @@ import org.jetbrains.anko.textView
 
 class RepoFragment : CommonViewPagerFragment() {
 
-    override fun getFragmentPages(): List<FragmentPage> {
+    override fun getFragmentPagesLogin(): List<FragmentPage> {
         return listOf(
             FragmentPage(RepoListFragment().apply {
                 arguments = Bundle().apply { putParcelable("userInfo", AccountManager.currentUser) }
             }, "My"),
+            FragmentPage(RepoListFragment(), "All")
+        )
+    }
+
+    override fun getFragmentPagesNotLogin(): List<FragmentPage> {
+        return listOf(
             FragmentPage(RepoListFragment(), "All")
         )
     }

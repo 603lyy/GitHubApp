@@ -2,7 +2,6 @@ package com.kotlin.githubapp.view.common
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.kotlin.githubapp.utils.ViewPagerAdapterList
 import com.kotlin.githubapp.view.config.FragmentPage

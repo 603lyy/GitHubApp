@@ -84,6 +84,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
     fun onLoginSuccess() {
         showProgress(false)
         toast("登录成功")
+        finish()
     }
 
     fun onLoginError(e: Throwable) {
