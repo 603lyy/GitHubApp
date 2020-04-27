@@ -18,7 +18,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <TableLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:visibility="gone"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"

@@ -9,26 +9,26 @@ import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
 import com.kotlin.common.ext.no
 import com.kotlin.common.ext.otherwise
 import com.kotlin.common.ext.yes
-import com.kotlin.common.log.logger
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.model.account.AccountManager
 import com.kotlin.githubapp.model.account.OnAccountStatusChangeListener
 import com.kotlin.githubapp.network.entities.User
-import com.kotlin.githubapp.network.services.RepositoryService
 import com.kotlin.githubapp.utils.*
 import com.kotlin.githubapp.view.config.NavViewItem
 import com.kotlin.githubapp.view.fragment.AboutFragment
+import com.kotlin.githubapp.view.widget.ActionBarController
 import com.kotlin.githubapp.view.widget.NavigationController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
-import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.sdk15.listeners.onClick
 import org.jetbrains.anko.toast
-import java.util.*
 
 @ActivityBuilder(flags = [Intent.FLAG_ACTIVITY_CLEAR_TOP])
 class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
+
+    val actionBarController by lazy {
+        ActionBarController(this)
+    }
 
     private val navigationController by lazy {
         NavigationController(navigationView, ::onNavItemChanged, ::handleNavigationHeaderClickEvent)
@@ -59,13 +59,6 @@ class MainActivity : AppCompatActivity(), OnAccountStatusChangeListener {
         AccountManager.onAccountStatusChangeListenerList.add(this)
 
         showFragment(R.id.fragmentContainer, AboutFragment::class.java)
-
-        RepositoryService.allRepositories(2, "pushed:<" + Date().format("yyyy-MM-dd"))
-            .subscribe({
-                logger.debug("Paging: hasNext=${it.paging.hasNext}, hasPrev=${it.paging.hasPrev}")
-            }, {
-                it.printStackTrace()
-            })
     }
 
     private fun initNavigationView() {
