@@ -16,6 +16,7 @@ import com.kotlin.common.ext.yes
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.presenter.LoginPresenter
 import com.kotlin.githubapp.utils.hideSoftInput
+import com.kotlin.githubapp.view.config.Themer
 import com.kotlin.mvp.impl.BaseActivity
 import kotlinx.android.synthetic.main.app_bar_simple.*
 import org.jetbrains.anko.toast
@@ -31,6 +32,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Themer.applyProperTheme(this)
         setContentView(R.layout.activity_login)
         setSupportActionBar(toolbar)
 
