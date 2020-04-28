@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".view.LoginActivity">
 
     <include layout="@layout/app_bar_simple"/>
 
@@ -49,7 +50,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:textColor="#000000" />
+                        android:textColor="?android:textColorPrimaryInverse" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +67,7 @@
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:textColor="#000000" />
+                        android:textColor="?android:textColorPrimaryInverse" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

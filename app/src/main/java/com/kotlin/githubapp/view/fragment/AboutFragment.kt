@@ -41,20 +41,16 @@ class AboutFragmentUI : AnkoComponent<AboutFragment> {
                 }
 
                 themedTextView("GitHub", R.style.detail_title) {
-                    textColorResource = R.color.colorPrimary
                 }.lparams(width = wrapContent, height = wrapContent) {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 
                 themedTextView("By lyy", R.style.detail_description) {
-                    textColorResource = R.color.colorPrimary
                 }.lparams(width = wrapContent, height = wrapContent) {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 
                 themedTextView(R.string.open_source_licenses, R.style.detail_description) {
-                    textColorResource = R.color.colorPrimary
-
                     onClick {
                         alert {
                             customView {

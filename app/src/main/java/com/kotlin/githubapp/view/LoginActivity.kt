@@ -17,6 +17,7 @@ import com.kotlin.githubapp.R
 import com.kotlin.githubapp.presenter.LoginPresenter
 import com.kotlin.githubapp.utils.hideSoftInput
 import com.kotlin.mvp.impl.BaseActivity
+import kotlinx.android.synthetic.main.app_bar_simple.*
 import org.jetbrains.anko.toast
 
 @ActivityBuilder(flags = [Intent.FLAG_ACTIVITY_NO_HISTORY])
@@ -30,8 +31,8 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
+        setSupportActionBar(toolbar)
 
         signBtn.setOnClickListener {
             presenter.checkUserName(userName.text.toString())
