@@ -10,6 +10,7 @@ import com.kotlin.githubapp.network.entities.Repository
 import com.kotlin.githubapp.network.services.ActivityService
 import com.kotlin.githubapp.network.services.RepositoryService
 import com.kotlin.githubapp.utils.*
+import com.kotlin.githubapp.view.config.Themer
 import kotlinx.android.synthetic.main.activity_repo_detail.*
 import kotlinx.android.synthetic.main.app_bar_details.*
 import retrofit2.Response
@@ -23,6 +24,7 @@ class RepoDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Themer.applyProperTheme(this)
         setContentView(R.layout.activity_repo_detail)
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

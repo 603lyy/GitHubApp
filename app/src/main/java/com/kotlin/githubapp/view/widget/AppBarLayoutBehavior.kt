@@ -12,8 +12,15 @@ class AppBarLayoutBehavior(context: Context, attrs: AttributeSet?) : Coordinator
         const val INVALID_VALUE = 0
     }
 
+    /**
+     * 目标需要移动到的位置
+     */
     private var targetTop: Int
     private var targetLeft: Int
+
+    /**
+     * 目标目前的位置
+     */
     private var originalTop: Int
     private var originalLeft: Int
 
@@ -63,6 +70,9 @@ class AppBarLayoutBehavior(context: Context, attrs: AttributeSet?) : Coordinator
             child.y = originalTop.toFloat()
         }
 
+        /**
+         * child.pivotX代表view缩放的起点X轴坐标
+         */
         if(targetLeft == INVALID_VALUE){
             targetLeft = (originalLeft + (originalWidth - targetWidth) * child.pivotX / originalWidth).toInt()
         }
