@@ -62,7 +62,7 @@ class RepoDetailActivity : AppCompatActivity() {
             } else {
                 ActivityService.star(repository.owner.login, repository.name)
                     .map { true }
-            }.doOnNext { reloadDetails() }
+            }.doOnNext { reloadDetails(true) }
         }
 
         watches.checkEvent = { isChecked ->
@@ -72,7 +72,7 @@ class RepoDetailActivity : AppCompatActivity() {
             } else {
                 ActivityService.watch(repository.owner.login, repository.name)
                     .map { true }
-            }.doOnNext { reloadDetails() }
+            }.doOnNext { reloadDetails(true) }
         }
 
         ActivityService.isStarred(repository.owner.login, repository.name)
@@ -93,8 +93,8 @@ class RepoDetailActivity : AppCompatActivity() {
             }
     }
 
-    private fun reloadDetails() {
-        RepositoryService.getRepository(repository.owner.login, repository.name)
+    private fun reloadDetails(forceNetwork: Boolean = false) {
+        RepositoryService.getRepository(repository.owner.login, repository.name, forceNetwork)
             .subscribe(object : Subscriber<Repository>() {
                 override fun onStart() {
                     super.onStart()

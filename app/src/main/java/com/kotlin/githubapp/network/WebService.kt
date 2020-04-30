@@ -4,6 +4,7 @@ import com.kotlin.common.ext.ensureDir
 import com.kotlin.githubapp.AppContext
 import com.kotlin.githubapp.network.interceptors.AcceptInterceptor
 import com.kotlin.githubapp.network.interceptors.AuthInterceptor
+import com.kotlin.githubapp.network.interceptors.CacheInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -41,6 +42,7 @@ val retrofit by lazy {
                 .cache(Cache(cacheFile, 1024 * 1024 * 1024))
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor(AcceptInterceptor())
+                .addInterceptor(CacheInterceptor())
                 .addInterceptor(AuthInterceptor())
                 .build()
         )
