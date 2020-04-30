@@ -1,5 +1,6 @@
 package com.kotlin.githubapp.network.services
 
+import com.kotlin.githubapp.network.FORCE_NETWORK
 import com.kotlin.githubapp.network.entities.Repository
 import com.kotlin.githubapp.network.entities.SearchRepositories
 import com.kotlin.githubapp.network.retrofit
@@ -24,6 +25,13 @@ interface RepositoryApi {
         @Query("q") q: String,
         @Query("per_page") per_page: Int = 20
     ): Observable<SearchRepositories>
+
+    @GET("/repos/{owner}/{repo}")
+    fun getRepository(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String,
+        @Query(FORCE_NETWORK) forceNetwork: Boolean = false
+    ): Observable<Repository>
 }
 
 object RepositoryService : RepositoryApi by retrofit.create(RepositoryApi::class.java)

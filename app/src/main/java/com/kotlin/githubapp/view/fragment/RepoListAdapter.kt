@@ -1,11 +1,16 @@
 package com.kotlin.githubapp.view.fragment
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bennyhuo.tieguanyin.runtime.core.ActivityBuilder
+import com.kotlin.githubapp.AppContext
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.network.entities.Repository
 import com.kotlin.githubapp.utils.loadWithGlide
 import com.kotlin.githubapp.utils.toKilo
+import com.kotlin.githubapp.view.RepoDetailActivity
 import com.kotlin.githubapp.view.common.CommonListAdapter
 import kotlinx.android.synthetic.main.item_repo.view.*
 
@@ -23,5 +28,10 @@ class RepoListAdapter : CommonListAdapter<Repository>(R.layout.item_repo) {
     }
 
     override fun onItemClicked(itemView: View, item: Repository) {
+        ActivityBuilder.INSTANCE.init(AppContext)
+        val intent = Intent(AppContext, RepoDetailActivity::class.java)
+        intent.putExtra("repository", item)
+        var options: Bundle? = null
+        ActivityBuilder.INSTANCE.startActivity(AppContext, intent, options, -1, -1)
     }
 }
