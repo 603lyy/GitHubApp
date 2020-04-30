@@ -20,6 +20,8 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="sideBarBackground">@drawable/side_nav_bar</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
@@ -41,6 +43,8 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="sideBarBackground">@drawable/side_nav_bar</item>
     </style>
 
     <style name="list_item_title">

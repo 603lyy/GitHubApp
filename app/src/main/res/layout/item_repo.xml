@@ -7,7 +7,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:transitionName="userHead">
 
-    <cn.carbs.android.avatarimageview.library.AvatarImageView
+    <cn.carbs.android.avatarimageview.library.AppCompatAvatarImageView
         android:id="@+id/avatarView"
         style="@style/list_item_avatar"
         app:srcCompat="@drawable/ic_github"/>

@@ -3,7 +3,7 @@ package com.kotlin.githubapp.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import cn.carbs.android.avatarimageview.library.AvatarImageView
+import cn.carbs.android.avatarimageview.library.AppCompatAvatarImageView
 import com.kotlin.githubapp.R
 import com.kotlin.githubapp.utils.markdownText
 import com.kotlin.githubapp.view.common.CommonSinglePageFragment
@@ -75,7 +75,7 @@ class AboutFragmentUI : AnkoComponent<AboutFragment> {
     }.view
 }
 
-inline fun ViewManager.avatarImageView(): AvatarImageView = avatarImageView() {}
-inline fun ViewManager.avatarImageView(init: (@AnkoViewDslMarker AvatarImageView).() -> Unit): AvatarImageView {
-    return ankoView({ ctx: Context -> AvatarImageView(ctx) }, theme = 0) { init() }
+inline fun ViewManager.avatarImageView(): AppCompatAvatarImageView = avatarImageView() {}
+inline fun ViewManager.avatarImageView(init: (@AnkoViewDslMarker AppCompatAvatarImageView).() -> Unit): AppCompatAvatarImageView {
+    return ankoView({ ctx: Context -> AppCompatAvatarImageView(ctx) }, theme = 0) { init() }
 }

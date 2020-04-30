@@ -2,6 +2,7 @@ package com.kotlin.githubapp.network
 
 import com.kotlin.common.ext.ensureDir
 import com.kotlin.githubapp.AppContext
+import com.kotlin.githubapp.network.compat.enableTls12OnPreLollipop
 import com.kotlin.githubapp.network.interceptors.AcceptInterceptor
 import com.kotlin.githubapp.network.interceptors.AuthInterceptor
 import com.kotlin.githubapp.network.interceptors.CacheInterceptor
@@ -44,6 +45,7 @@ val retrofit by lazy {
                 .addInterceptor(AcceptInterceptor())
                 .addInterceptor(CacheInterceptor())
                 .addInterceptor(AuthInterceptor())
+                .enableTls12OnPreLollipop()
                 .build()
         )
         .baseUrl(BASE_URL)

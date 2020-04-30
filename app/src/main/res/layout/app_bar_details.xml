@@ -63,7 +63,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <cn.carbs.android.avatarimageview.library.AvatarImageView
+    <cn.carbs.android.avatarimageview.library.AppCompatAvatarImageView
         android:id="@+id/avatarView"
         android:layout_width="@dimen/avatar_huge"
         android:layout_height="@dimen/avatar_huge"
