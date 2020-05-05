@@ -10,6 +10,7 @@ import com.kotlin.githubapp.network.entities.Repository
 import com.kotlin.githubapp.network.services.ActivityService
 import com.kotlin.githubapp.network.services.RepositoryService
 import com.kotlin.githubapp.utils.*
+import com.kotlin.githubapp.view.common.BaseDetailActivity
 import com.kotlin.githubapp.view.config.Themer
 import kotlinx.android.synthetic.main.activity_repo_detail.*
 import kotlinx.android.synthetic.main.app_bar_details.*
@@ -17,7 +18,7 @@ import retrofit2.Response
 import rx.Subscriber
 
 @ActivityBuilder
-class RepoDetailActivity : AppCompatActivity() {
+class RepoDetailActivity : BaseDetailActivity() {
 
     //    @Required
     lateinit var repository: Repository
@@ -126,14 +127,4 @@ class RepoDetailActivity : AppCompatActivity() {
             })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            // Respond to the action bar's Up/Home button
-            android.R.id.home -> {
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
