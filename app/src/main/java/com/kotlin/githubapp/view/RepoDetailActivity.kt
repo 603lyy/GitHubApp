@@ -11,14 +11,14 @@ import com.kotlin.githubapp.network.services.ActivityService
 import com.kotlin.githubapp.network.services.RepositoryService
 import com.kotlin.githubapp.utils.*
 import com.kotlin.githubapp.view.common.BaseDetailActivity
-import com.kotlin.githubapp.view.config.Themer
+import com.kotlin.githubapp.view.common.BaseDetailSwipeFinishableActivity
 import kotlinx.android.synthetic.main.activity_repo_detail.*
 import kotlinx.android.synthetic.main.app_bar_details.*
 import retrofit2.Response
 import rx.Subscriber
 
 @ActivityBuilder
-class RepoDetailActivity : BaseDetailActivity() {
+class RepoDetailActivity : BaseDetailSwipeFinishableActivity() {
 
     //    @Required
     lateinit var repository: Repository

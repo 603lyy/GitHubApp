@@ -24,6 +24,13 @@
         <item name="sideBarBackground">@drawable/side_nav_bar</item>
     </style>
 
+    <style name="AppTheme.Translucent">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -45,6 +52,13 @@
         <item name="windowNoTitle">true</item>
 
         <item name="sideBarBackground">@drawable/side_nav_bar</item>
+    </style>
+
+    <style name="AppTheme.Dark.Translucent">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="list_item_title">

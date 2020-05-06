@@ -6,18 +6,21 @@ import com.kotlin.githubapp.R
 import com.kotlin.githubapp.settings.Settings
 
 object Themer {
-    enum class ThemeMode(@StyleRes val normal: Int){
-        DAY(R.style.AppTheme), NIGHT(R.style.AppTheme_Dark)
+    enum class ThemeMode(@StyleRes val normal: Int, @StyleRes val translucent: Int) {
+        DAY(R.style.AppTheme, R.style.AppTheme_Translucent), NIGHT(
+            R.style.AppTheme_Dark,
+            R.style.AppTheme_Dark_Translucent
+        )
     }
 
-    fun applyProperTheme(activity: Activity){
-        activity.setTheme(currentTheme().normal)
+    fun applyProperTheme(activity: Activity, translucent: Boolean = false) {
+        activity.setTheme(currentTheme().let { if (translucent) it.translucent else it.normal })
     }
 
     fun currentTheme() = ThemeMode.valueOf(Settings.themeMode)
 
-    fun toggle(activity: Activity){
-        when(currentTheme()){
+    fun toggle(activity: Activity) {
+        when (currentTheme()) {
             ThemeMode.DAY -> Settings.themeMode = ThemeMode.NIGHT.name
             ThemeMode.NIGHT -> Settings.themeMode = ThemeMode.DAY.name
         }

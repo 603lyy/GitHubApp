@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
+import com.bennyhuo.swipefinishable.SwipeFinishable
 import com.bennyhuo.tieguanyin.runtime.core.ActivityBuilder
 
 private lateinit var INSTANCE: Application
@@ -16,6 +17,7 @@ class App : Application() {
 
         INSTANCE = this
         ActivityBuilder.INSTANCE.init(this)
+        SwipeFinishable.INSTANCE.init(this)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 
