@@ -18,7 +18,7 @@ import retrofit2.Response
 import rx.Subscriber
 
 @ActivityBuilder
-class RepoDetailActivity : BaseDetailSwipeFinishableActivity() {
+class RepoDetailActivity : BaseDetailActivity() {
 
     //    @Required
     lateinit var repository: Repository

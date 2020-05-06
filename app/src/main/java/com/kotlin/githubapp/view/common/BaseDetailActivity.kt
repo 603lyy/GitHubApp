@@ -52,7 +52,7 @@ abstract class BaseDetailActivity : AppCompatActivity() {
 class SwipeBackTouchDelegate(private val activity: Activity, block: () -> Unit) {
 
     companion object {
-        private const val MIN_FLING_TO_BACK = 2000
+        private const val MIN_FLING_TO_BACK = 200
     }
 
     private val minFlingToBack by lazy {

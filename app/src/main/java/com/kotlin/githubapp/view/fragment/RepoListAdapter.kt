@@ -15,6 +15,7 @@ import com.kotlin.githubapp.view.common.CommonListAdapter
 import kotlinx.android.synthetic.main.item_repo.view.*
 
 class RepoListAdapter : CommonListAdapter<Repository>(R.layout.item_repo) {
+
     override fun onBindData(viewHolder: RecyclerView.ViewHolder, repository: Repository) {
 
         viewHolder.itemView.apply {
@@ -28,10 +29,10 @@ class RepoListAdapter : CommonListAdapter<Repository>(R.layout.item_repo) {
     }
 
     override fun onItemClicked(itemView: View, item: Repository) {
-        ActivityBuilder.INSTANCE.init(AppContext)
-        val intent = Intent(AppContext, RepoDetailActivity::class.java)
+        ActivityBuilder.INSTANCE.init(itemView.context)
+        val intent = Intent(itemView.context, RepoDetailActivity::class.java)
         intent.putExtra("repository", item)
         var options: Bundle? = null
-        ActivityBuilder.INSTANCE.startActivity(AppContext, intent, options, -1, -1)
+        ActivityBuilder.INSTANCE.startActivity(itemView.context, intent, options, 0, 0)
     }
 }
