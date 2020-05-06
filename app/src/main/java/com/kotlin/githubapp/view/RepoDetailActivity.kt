@@ -25,7 +25,6 @@ class RepoDetailActivity : BaseDetailActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Themer.applyProperTheme(this)
         setContentView(R.layout.activity_repo_detail)
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

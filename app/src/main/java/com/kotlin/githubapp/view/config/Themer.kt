@@ -18,8 +18,8 @@ object Themer {
 
     fun toggle(activity: Activity){
         when(currentTheme()){
-            Themer.ThemeMode.DAY -> Settings.themeMode = ThemeMode.NIGHT.name
-            Themer.ThemeMode.NIGHT -> Settings.themeMode = ThemeMode.DAY.name
+            ThemeMode.DAY -> Settings.themeMode = ThemeMode.NIGHT.name
+            ThemeMode.NIGHT -> Settings.themeMode = ThemeMode.DAY.name
         }
         activity.recreate()
     }

@@ -1,6 +1,7 @@
 package com.kotlin.githubapp.view.common
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -8,12 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
 import com.bennyhuo.tieguanyin.annotations.PendingTransition
 import com.kotlin.githubapp.R
+import com.kotlin.githubapp.view.config.Themer
 import org.jetbrains.anko.dip
 
 @ActivityBuilder(pendingTransition = PendingTransition(enterAnim = R.anim.rignt_in, exitAnim = R.anim.left_out))
 abstract class BaseDetailActivity : AppCompatActivity() {
 
     private val swipeBackTouchDelegate by lazy { SwipeBackTouchDelegate(this, ::finish) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Themer.applyProperTheme(this)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
