@@ -5,7 +5,7 @@ import com.kotlin.common.ext.otherwise
 import com.kotlin.common.ext.yes
 import com.kotlin.common.log.logger
 import com.kotlin.githubapp.network.FORCE_NETWORK
-import com.kotlin.githubapp.network.Network
+import com.kotlin.githubapp.utils.Network
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -21,7 +21,7 @@ class CacheInterceptor : Interceptor {
                     .build()
             }
             .otherwise {
-                request.url().queryParameter(FORCE_NETWORK)?.toBoolean()?.let {
+                request.url.queryParameter(FORCE_NETWORK)?.toBoolean()?.let {
                     it.yes {
                         //注意 noCache | noStore，前者不会读缓存；后者既不读缓存，也不对响应进行缓存
                         //尽管看上去 noCache 比较符合我们的需求，但服务端仍然可能返回服务端的缓存
@@ -36,9 +36,9 @@ class CacheInterceptor : Interceptor {
             }
 
         request = request.newBuilder()
-            .url(request.url().newBuilder().removeAllQueryParameters(FORCE_NETWORK).build()).build()
+            .url(request.url.newBuilder().removeAllQueryParameters(FORCE_NETWORK).build()).build()
         return chain.proceed(request).also { response ->
-            logger.error("Cache: ${response.cacheResponse()}, Network: ${response.networkResponse()}")
+            logger.error("Cache: ${response.cacheResponse}, Network: ${response.networkResponse}")
         }
     }
 }

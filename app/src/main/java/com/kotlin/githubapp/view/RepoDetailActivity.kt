@@ -3,9 +3,13 @@ package com.kotlin.githubapp.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+//import com.apollographql.apollo.ApolloCall
+//import com.apollographql.apollo.api.Operation
+//import com.apollographql.apollo.exception.ApolloException
 import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
 import com.bennyhuo.tieguanyin.annotations.Required
 import com.kotlin.githubapp.R
+//import com.kotlin.githubapp.network.apolloClient
 import com.kotlin.githubapp.network.entities.Repository
 import com.kotlin.githubapp.network.services.ActivityService
 import com.kotlin.githubapp.network.services.RepositoryService
@@ -110,7 +114,7 @@ class RepoDetailActivity : BaseDetailActivity() {
                     stars.content = repository.stargazers_count.toString()
                     watches.content = repository.subscribers_count.toString()
                     forks.content = repository.forks_count.toString()
-                    issues.content = repository.open_issues_count.toString()
+//                    issues.content = repository.open_issues_count.toString()
 
                     loadingView.animate().alpha(0f).start()
                     detailContainer.animate().alpha(1f).start()
@@ -124,6 +128,22 @@ class RepoDetailActivity : BaseDetailActivity() {
                 }
 
             })
+
+//        apolloClient.query(RepositoryIssueCountQuery(repository.name, repository.owner.login))
+//            .enqueue(object : ApolloCall.Callback<RepositoryIssueCountQuery.Data>(){
+//                override fun onFailure(e: ApolloException) {
+//                    e.printStackTrace()
+//                }
+//
+//                override fun onResponse(response: com.apollographql.apollo.api.Response<Operation.Data>) {
+//                    runOnUiThread {
+//                        response.data()?.let{
+//                            issues.content = "open: ${it.repository()?.openIssues()?.totalCount()?: 0} closed: ${it.repository()?.closedIssues()?.totalCount()?: 0}"
+//                        }
+//                    }
+//                }
+//
+//            })
     }
 
 }

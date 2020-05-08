@@ -1,4 +1,4 @@
-package com.kotlin.githubapp.network
+package com.kotlin.githubapp.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

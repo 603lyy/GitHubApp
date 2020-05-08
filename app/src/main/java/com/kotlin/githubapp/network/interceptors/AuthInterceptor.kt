@@ -13,7 +13,7 @@ class AuthInterceptor : Interceptor {
             original.newBuilder()
                 .apply {
                     when {
-                        original.url().pathSegments().contains("authorizations") -> {
+                        original.url.pathSegments.contains("authorizations") -> {
                             val userCredentials =
                                 AccountManager.username + ":" + AccountManager.password
                             val auth = "Basic" + String(
