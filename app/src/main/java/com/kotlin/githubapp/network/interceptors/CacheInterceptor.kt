@@ -5,7 +5,7 @@ import com.kotlin.common.ext.otherwise
 import com.kotlin.common.ext.yes
 import com.kotlin.common.log.logger
 import com.kotlin.githubapp.network.FORCE_NETWORK
-import com.kotlin.githubapp.network.Network
+import com.kotlin.githubapp.utils.Network
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response

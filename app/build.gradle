@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.apollographql.apollo'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -35,6 +36,11 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
+
+        packagingOptions {
+            //解决编译时com.android.builder.merge.DuplicateRelativeFileException: More than one file was found with OS independent path 'META-INF/rxjava.properties'这个错误
+            exclude 'META-INF/rxjava.properties'
+        }
     }
 
     buildTypes {
@@ -44,6 +50,11 @@ android {
         }
     }
 
+}
+
+repositories {
+    //新增
+    jcenter()
 }
 
 dependencies {
@@ -111,6 +122,9 @@ dependencies {
     api 'com.github.jdsjlzx:LRecyclerView:1.5.0'
 
     api 'com.android.support:multidex:1.0.3'
+
+    api "com.apollographql.apollo:apollo-rx2-support:$apollo_version"
+    api "com.apollographql.apollo:apollo-runtime:$apollo_version"
 
     api project(path: ':common')
     api project(path: ':mvp')
