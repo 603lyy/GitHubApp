@@ -1,7 +1,5 @@
 package com.kotlin.githubapp.view.fragment
 
-import android.content.Intent
-import android.content.Intent.parseUri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
