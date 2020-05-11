@@ -1,0 +1,5 @@
+query RepositoryIssueCount($repo: String!, $owner: String!){
+  repository(name: $repo, owner: $owner) {
+    description
+  }
+}
