@@ -126,6 +126,9 @@ dependencies {
     api "com.apollographql.apollo:apollo-rx2-support:$apollo_version"
     api "com.apollographql.apollo:apollo-runtime:$apollo_version"
 
+    compileOnly("org.jetbrains:annotations:13.0")
+    testCompileOnly("org.jetbrains:annotations:13.0")
+
     api project(path: ':common')
     api project(path: ':mvp')
 }

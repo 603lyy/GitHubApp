@@ -1,12 +1,13 @@
 package com.kotlin.githubapp.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
+import com.apollographql.apollo.ApolloCall
+import com.apollographql.apollo.exception.ApolloException
 import com.bennyhuo.tieguanyin.annotations.ActivityBuilder
-import com.bennyhuo.tieguanyin.annotations.Required
 import com.kotlin.githubapp.R
+import com.kotlin.githubapp.network.apolloClient
 import com.kotlin.githubapp.network.entities.Repository
+import com.kotlin.githubapp.network.graphql.entities.RepositoryIssueCountQuery
 import com.kotlin.githubapp.network.services.ActivityService
 import com.kotlin.githubapp.network.services.RepositoryService
 import com.kotlin.githubapp.utils.*
@@ -121,6 +122,34 @@ class RepoDetailActivity : BaseDetailActivity() {
                 override fun onError(e: Throwable) {
                     loadingView.animate().alpha(0f).start()
                     e.printStackTrace()
+                }
+
+            })
+
+//        val watcher = apolloClient.query(RepositoryIssueCountQuery(repository.name, repository.owner.login)).watcher()
+//        RxApollo.from(watcher)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe {
+//                    it.data()?.let{
+//                        issues.content = "open: ${it.repository()?.openIssues()?.totalCount()?: 0} closed: ${it.repository()?.closedIssues()?.totalCount()?: 0}"
+//                    }
+//                }
+
+        apolloClient.query(RepositoryIssueCountQuery(repository.name, repository.owner.login))
+            .enqueue(object : ApolloCall.Callback<RepositoryIssueCountQuery.Data>() {
+                override fun onFailure(e: ApolloException) {
+                    e.printStackTrace()
+                }
+
+                override fun onResponse(response: com.apollographql.apollo.api.Response<RepositoryIssueCountQuery.Data>) {
+                    runOnUiThread {
+                        response.data()?.let {
+                            issues.content = "open: ${it.repository()?.openIssues()
+                                ?.totalCount() ?: 0} closed: ${it.repository()?.closedIssues()
+                                ?.totalCount() ?: 0}"
+                        }
+                    }
                 }
 
             })
