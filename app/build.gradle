@@ -126,6 +126,9 @@ dependencies {
     api "com.apollographql.apollo:apollo-rx2-support:$apollo_version"
     api "com.apollographql.apollo:apollo-runtime:$apollo_version"
 
+    //https://github.com/enbandari/RetroApollo-Android
+    api "com.bennyhuo.retroapollo:retroapollo:0.4.2-beta"
+
     compileOnly("org.jetbrains:annotations:13.0")
     testCompileOnly("org.jetbrains:annotations:13.0")
 
