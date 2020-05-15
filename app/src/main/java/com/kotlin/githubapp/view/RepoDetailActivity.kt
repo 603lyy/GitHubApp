@@ -137,12 +137,30 @@ class RepoDetailActivity : BaseDetailActivity() {
 //                    }
 //                }
 
-        GraphQLService.repositoryIssueCount(repository.owner.login, repository.name)
-            .subscribeIgnoreError { data ->
-                issues.content = "open: ${data.repository()?.openIssues()
-                    ?.totalCount() ?: 0} closed: ${data.repository()?.closedIssues()
-                    ?.totalCount() ?: 0}"
-            }
+//        GraphQLService.repositoryIssueCount(repository.owner.login, repository.name)
+//            .subscribeIgnoreError { data ->
+//                issues.content = "open: ${data.repository()?.openIssues()
+//                    ?.totalCount() ?: 0} closed: ${data.repository()?.closedIssues()
+//                    ?.totalCount() ?: 0}"
+//            }
+
+        GraphQLService.repositoryIssueCount2(repository.owner.login, repository.name)
+            .enqueue(object : ApolloCall.Callback<RepositoryIssueCountQuery.Data>() {
+                override fun onFailure(e: ApolloException) {
+                    e.printStackTrace()
+                }
+
+                override fun onResponse(response: com.apollographql.apollo.api.Response<RepositoryIssueCountQuery.Data>) {
+                    runOnUiThread {
+                        response.data()?.let {
+                            issues.content = "open: ${it.repository()?.openIssues()
+                                ?.totalCount() ?: 0} closed: ${it.repository()?.closedIssues()
+                                ?.totalCount() ?: 0}"
+                        }
+                    }
+                }
+
+            })
 
 //        apolloClient.query(RepositoryIssueCountQuery(repository.name, repository.owner.login))
 //            .enqueue(object : ApolloCall.Callback<RepositoryIssueCountQuery.Data>() {

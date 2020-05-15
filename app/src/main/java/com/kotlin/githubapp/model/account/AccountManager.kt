@@ -66,7 +66,7 @@ object AccountManager {
     fun login2() =
         AuthService.getUser()
             .doOnNext {
-                if (it.token == null || it.token.isEmpty()) it.token = Configs.Account.accessToken
+                if (it.token.isEmpty()) it.token = Configs.Account.accessToken
             }
             .flatMap {
                 token = it.token
