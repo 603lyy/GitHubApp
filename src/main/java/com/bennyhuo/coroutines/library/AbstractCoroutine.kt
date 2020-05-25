@@ -1,10 +1,7 @@
 package com.bennyhuo.coroutines.library
 
 import java.util.concurrent.atomic.AtomicReference
-import kotlin.coroutines.experimental.Continuation
-import kotlin.coroutines.experimental.CoroutineContext
-import kotlin.coroutines.experimental.startCoroutine
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlin.coroutines.*
 
 typealias OnComplete<T> = (T?, Throwable?) -> Unit
 
@@ -26,7 +23,7 @@ abstract class AbstractCoroutine<T>(override val context: CoroutineContext, bloc
     val isCompleted
         get() = state.get() is State.Complete<*>
 
-    override fun resume(value: T) {
+    fun resume(value: T) {
         val currentState = state.getAndSet(State.Complete(value))
         when (currentState) {
             is State.CompleteHandler<*> -> {
@@ -35,7 +32,7 @@ abstract class AbstractCoroutine<T>(override val context: CoroutineContext, bloc
         }
     }
 
-    override fun resumeWithException(exception: Throwable) {
+    fun resumeWithException(exception: Throwable) {
         val currentState = state.getAndSet(State.Complete<T>(null, exception))
         when (currentState) {
             is State.CompleteHandler<*> -> {
