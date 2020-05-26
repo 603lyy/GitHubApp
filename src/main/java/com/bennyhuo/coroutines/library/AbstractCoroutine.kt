@@ -1,5 +1,6 @@
 package com.bennyhuo.coroutines.library
 
+import com.bennyhuo.coroutines.utils.log
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.*
 
@@ -11,19 +12,33 @@ sealed class State {
     class CompleteHandler<T>(val handler: OnComplete<T>) : State()
 }
 
-abstract class AbstractCoroutine<T>(override val context: CoroutineContext, block: suspend () -> T): Continuation<T> {
+abstract class AbstractCoroutine<T>(
+    override val context: CoroutineContext,
+    block: suspend () -> T
+) : Continuation<T> {
 
     protected val state = AtomicReference<State>()
 
     init {
         state.set(State.InComplete)
+
+        //类似于设置callback
         block.startCoroutine(this)
     }
 
     val isCompleted
         get() = state.get() is State.Complete<*>
 
-    fun resume(value: T) {
+    override fun resumeWith(result: Result<T>) {
+        val value = result.getOrElse { exception ->
+            val currentState = state.getAndSet(State.Complete<T>(null, exception))
+            when (currentState) {
+                is State.CompleteHandler<*> -> {
+                    (currentState as State.CompleteHandler<T>).handler(null, exception)
+                }
+            }
+        } as T
+
         val currentState = state.getAndSet(State.Complete(value))
         when (currentState) {
             is State.CompleteHandler<*> -> {
@@ -32,53 +47,39 @@ abstract class AbstractCoroutine<T>(override val context: CoroutineContext, bloc
         }
     }
 
-    fun resumeWithException(exception: Throwable) {
-        val currentState = state.getAndSet(State.Complete<T>(null, exception))
+    suspend fun join() {
+        val currentState = state.get()
         when (currentState) {
-            is State.CompleteHandler<*> -> {
-                (currentState as State.CompleteHandler<T>).handler(null, exception)
+            is State.InComplete -> return joinSuspend()
+            is State.Complete<*> ->
+                when {
+                    currentState.value == null -> throw currentState.exception!!
+                    else -> return
+                }
+            else -> throw IllegalStateException("Invalid State: $currentState")
+        }
+    }
+
+    private suspend fun joinSuspend() = suspendCoroutine<Unit> { continuation ->
+        doOnCompleted { t, throwable ->
+            when {
+                t != null -> continuation.resume(Unit)
+                throwable != null -> continuation.resumeWithException(throwable)
+                else -> throw IllegalStateException("Won't happen.")
             }
         }
     }
 
-    suspend fun join() {
-        val currentState = state.get()
-        when (currentState) {
-            is State.InComplete -> {
-                return suspendCoroutine { continuation ->
-                    if (!state.compareAndSet(State.InComplete,
-                                    State.CompleteHandler<T> { t, throwable ->
-                                        when {
-                                            t != null -> continuation.resume(Unit)
-                                            throwable != null -> continuation.resumeWithException(throwable)
-                                            else -> continuation.resumeWithException(IllegalStateException("Cannot happen."))
-                                        }
-                                    })
-                    ) {
-                        val currentState = state.get()
-                        when (currentState) {
-                            is State.Complete<*> -> {
-                                (currentState as State.Complete<T>).let {
-                                    currentState.value?.let { continuation.resume(Unit) }
-                                            ?: continuation.resumeWithException(currentState.exception!!)
-                                }
-                            }
-                            else -> {
-                                throw IllegalStateException("Invalid State: $currentState")
-                            }
-                        }
+    protected fun doOnCompleted(block: (T?, Throwable?) -> Unit) {
+        if (!state.compareAndSet(State.InComplete, State.CompleteHandler<T>(block))) {
+            val currentState = state.get()
+            when (currentState) {
+                is State.Complete<*> -> {
+                    (currentState as State.Complete<T>).let {
+                        block(currentState.value, currentState.exception)
                     }
                 }
-            }
-            is State.Complete<*> -> {
-                if (currentState.value == null) {
-                    throw currentState.exception!!
-                } else {
-                    return
-                }
-            }
-            else -> {
-                throw IllegalStateException("Invalid State: $currentState")
+                else -> throw IllegalStateException("Invalid State: $currentState")
             }
         }
     }
