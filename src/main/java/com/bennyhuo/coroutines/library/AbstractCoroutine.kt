@@ -68,7 +68,7 @@ abstract class AbstractCoroutine<T>(
         }
     }
 
-    private fun doOnCompleted(block: (T?, Throwable?) -> Unit) {
+    protected fun doOnCompleted(block: (T?, Throwable?) -> Unit) {
         if (!state.compareAndSet(State.InComplete, State.CompleteHandler<T>(block))) {
             when (val currentState = state.get()) {
                 is State.Complete<*> -> {

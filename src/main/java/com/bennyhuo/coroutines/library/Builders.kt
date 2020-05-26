@@ -13,6 +13,13 @@ fun launch(
     return StandaloneCoroutine(context, block)
 }
 
+fun <T> async(
+    context: CoroutineContext = CommonPoolContext,
+    block: suspend () -> T
+): Deferred<T> {
+    return Deferred(context, block)
+}
+
 fun runBlocking(block: suspend () -> Unit) {
     val eventQueue = BlockingQueueDispatcher()
     val context = DispatcherContext(eventQueue)
