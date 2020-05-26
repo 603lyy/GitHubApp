@@ -30,30 +30,28 @@ abstract class AbstractCoroutine<T>(
         get() = state.get() is State.Complete<*>
 
     override fun resumeWith(result: Result<T>) {
-        val value = result.getOrElse { exception ->
+        result.fold({ value ->
+            when (val currentState = state.getAndSet(State.Complete(value))) {
+                is State.CompleteHandler<*> -> {
+                    (currentState as State.CompleteHandler<T>).handler(value as T, null)
+                }
+            }
+        }, { exception ->
             val currentState = state.getAndSet(State.Complete<T>(null, exception))
             when (currentState) {
                 is State.CompleteHandler<*> -> {
                     (currentState as State.CompleteHandler<T>).handler(null, exception)
                 }
             }
-        } as T
-
-        val currentState = state.getAndSet(State.Complete(value))
-        when (currentState) {
-            is State.CompleteHandler<*> -> {
-                (currentState as State.CompleteHandler<T>).handler(value, null)
-            }
-        }
+        })
     }
 
     suspend fun join() {
-        val currentState = state.get()
-        when (currentState) {
+        when (val currentState = state.get()) {
             is State.InComplete -> return joinSuspend()
             is State.Complete<*> ->
-                when {
-                    currentState.value == null -> throw currentState.exception!!
+                when (currentState.value) {
+                    null -> throw currentState.exception!!
                     else -> return
                 }
             else -> throw IllegalStateException("Invalid State: $currentState")
@@ -70,10 +68,9 @@ abstract class AbstractCoroutine<T>(
         }
     }
 
-    protected fun doOnCompleted(block: (T?, Throwable?) -> Unit) {
+    private fun doOnCompleted(block: (T?, Throwable?) -> Unit) {
         if (!state.compareAndSet(State.InComplete, State.CompleteHandler<T>(block))) {
-            val currentState = state.get()
-            when (currentState) {
+            when (val currentState = state.get()) {
                 is State.Complete<*> -> {
                     (currentState as State.Complete<T>).let {
                         block(currentState.value, currentState.exception)
