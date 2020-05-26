@@ -45,16 +45,4 @@ class DispatchedContinuation<T>(val delegate: Continuation<T>, val dispatcher: D
             delegate.resumeWith(result)
         }
     }
-
-//    override fun resume(value: T) {
-//        dispatcher.dispatch {
-//            delegate.resume(value)
-//        }
-//    }
-//
-//    override fun resumeWithException(exception: Throwable) {
-//        dispatcher.dispatch {
-//            delegate.resumeWithException(exception)
-//        }
-//    }
 }

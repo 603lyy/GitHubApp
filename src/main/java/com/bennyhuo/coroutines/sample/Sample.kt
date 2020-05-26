@@ -1,21 +1,22 @@
 package com.bennyhuo.coroutines.sample
 
+import com.bennyhuo.coroutines.library.delay
 import com.bennyhuo.coroutines.library.launch
+import com.bennyhuo.coroutines.library.runBlocking
 import com.bennyhuo.coroutines.utils.log
 import kotlin.coroutines.EmptyCoroutineContext
 
-fun main(args: Array<String>) {
-    launch(EmptyCoroutineContext) {
-        log(1)
-        val job = launch {
-            log(-1)
-            log("HelloWorld")
-            log(-2)
-        }
-        log(2)
-        job.join()
-        log(3)
+fun main(args: Array<String>) = runBlocking {
+    log(1)
+    val job = launch {
+        log(-1)
+        log("HelloWorld")
+        delay(1000)
+        log(-2)
     }
+    log(2)
+    job.join()
+    log(3)
 }
 
 //fun main(args: Array<String>) = runBlocking {
